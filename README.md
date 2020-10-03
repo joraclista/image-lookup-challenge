@@ -66,4 +66,9 @@ returns
 and GET ```http://localhost:8081/api/search/nature```
 returns a lot.
 
+### What's not implemented
+
+Obviously, timer for images storage to be updated, auth key request on expiration, search by multiple terms could be added, more logging, specific exceptions handling, moving images fetching to separate class and more, and it'll be just cool to get feedback on that.
+
+
 Thanks for the challenge and Have a nice day!
