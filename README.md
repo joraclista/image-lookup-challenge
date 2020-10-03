@@ -25,9 +25,9 @@ Thus I used just a java hash map (which can be changed to HazelCast impl) which 
 
 To search images I created hashmap with IMAGE DIGEST information as a key and image id as a value.
 
-Image digest is just a string with all image metadata : author + camera + tags + id.
+**Image digest** is just a string with all image metadata : **author + camera + tags + id**.
 
-Thus when user searchs by search term, keys are filtered (ignorecase) by this search term and then mapped to original image info.
+Thus when user searchs by search term, **keys are filtered (ignorecase) by this search term and then mapped to original image info**.
 That's it. 
 I know that for searches like that companies like booking com and etc implement precomputed searches/n-grams and so on.
 
