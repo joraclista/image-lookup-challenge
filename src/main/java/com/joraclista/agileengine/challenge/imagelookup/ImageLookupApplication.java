@@ -4,6 +4,7 @@ import com.joraclista.agileengine.challenge.imagelookup.http.ImagesHttpClient;
 import com.joraclista.agileengine.challenge.imagelookup.model.Auth;
 import com.joraclista.agileengine.challenge.imagelookup.model.Image;
 import com.joraclista.agileengine.challenge.imagelookup.model.PageOfImages;
+import com.joraclista.agileengine.challenge.imagelookup.repository.ImageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -37,12 +38,11 @@ public class ImageLookupApplication implements ApplicationRunner {
         log.info("run:");
 
         Map<String, Image> imagesMap = new HashMap<>();
-        Map<String, String> imageTagsToIdMap = new HashMap<>();
         Map<String, String> imageDigestToIdMap = new HashMap<>();
 
         Auth auth = getRestTemplate().postForObject(
                 API_URL + "/auth",
-                getBasicRequestWithBody(Map.of("apiKey",API_KEY)),
+                getBasicRequestWithBody(Map.of("apiKey", API_KEY)),
                 Auth.class);
 
         ImagesHttpClient imagesHttpClient = new ImagesHttpClient(auth, API_URL);
@@ -63,11 +63,8 @@ public class ImageLookupApplication implements ApplicationRunner {
             }
 
         }
-        log.info(" args:" + args);
-
+        repository.setImagesMap(imagesMap);
+        repository.setImagesDigestMap(imageDigestToIdMap);
     }
-
-
-
 
 }

@@ -1,6 +1,6 @@
 package com.joraclista.agileengine.challenge.imagelookup.controller;
 
-import com.joraclista.agileengine.challenge.imagelookup.ImageRepository;
+import com.joraclista.agileengine.challenge.imagelookup.repository.ImageRepository;
 import com.joraclista.agileengine.challenge.imagelookup.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
