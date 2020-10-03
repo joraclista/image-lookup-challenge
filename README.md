@@ -31,4 +31,39 @@ Thus when user searchs by search term, **keys are filtered (ignorecase) by this 
 That's it. 
 I know that for searches like that companies like booking com and etc implement precomputed searches/n-grams and so on.
 
+### Example
+GET ```http://localhost:8081/api/search/c221b4ac0be418f65728```
+
+returns
+```javascript
+[
+   {
+      "id":"c221b4ac0be418f65728",
+      "author":"Aged Stress",
+      "camera":"Leica M10",
+      "tags":"#nature #natureisbeautiful ",
+      "cropped_picture":"http://interview.agileengine.com/pictures/cropped/26008.JPG",
+      "full_picture":"http://interview.agileengine.com/pictures/full_size/26008.JPG"
+   }
+]
+```
+
+GET  ```http://localhost:8081/api/search/Deafening%20Grandfather```
+returns
+```javascript
+[
+   {
+      "id":"60a07c821a33520a4832",
+      "author":"Deafening Grandfather",
+      "camera":"Canon EOS Rebel SL3 / EOS 250D",
+      "tags":"#whataview #today #nature #photo #photooftheday #wonderfullife ",
+      "cropped_picture":"http://interview.agileengine.com/pictures/cropped/708033.jpg",
+      "full_picture":"http://interview.agileengine.com/pictures/full_size/708033.jpg"
+   }
+]
+```
+
+and GET ```http://localhost:8081/api/search/nature```
+returns a lot.
+
 Thanks for the challenge and Have a nice day!
