@@ -19,4 +19,16 @@ Image, PageOfImages - are used as abstractions for image information got from /i
 ### Search by term
 Implemented in SearchImagesController - a controller providing /search/${searchTerm} endpoint
 
-## Algorithm
+### Search Algorithm
+As I had only 2 hours for implementation I decided not to use any databases including in-menory as I know it will take a lot much time to implement search.
+Thus I used just a java hash map (which can be changed to HazelCast impl) which is ok for the 2-hrs pet project.
+
+To search images I created hashmap with IMAGE DIGEST information as a key and image id as a value.
+
+Image digest is just a string with all image metadata : author + camera + tags + id.
+
+Thus when user searchs by search term, keys are filtered (ignorecase) by this search term and then mapped to original image info.
+That's it. 
+I know that for searches like that companies like booking com and etc implement precomputed searches/n-grams and so on.
+
+Thanks for the challenge and Have a nice day!
