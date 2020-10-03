@@ -34,35 +34,39 @@ public class ImageLookupApplication implements ApplicationRunner {
 
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         log.info("run:");
 
         Map<String, Image> imagesMap = new HashMap<>();
         Map<String, String> imageDigestToIdMap = new HashMap<>();
+        try {
+            Auth auth = getRestTemplate().postForObject(
+                    API_URL + "/auth",
+                    getBasicRequestWithBody(Map.of("apiKey", API_KEY )),
+                    Auth.class);
+            log.info("run: auth = {}", auth.isAuth());
+            if (auth.isAuth()) {
+                ImagesHttpClient imagesHttpClient = new ImagesHttpClient(auth, API_URL);
+                int currentPage = 1;
+                boolean hasMorePages = true;
 
-        Auth auth = getRestTemplate().postForObject(
-                API_URL + "/auth",
-                getBasicRequestWithBody(Map.of("apiKey", API_KEY)),
-                Auth.class);
-
-        ImagesHttpClient imagesHttpClient = new ImagesHttpClient(auth, API_URL);
-        if (auth.isAuth()) {
-            int currentPage = 1;
-            boolean hasMorePages = true;
-
-            while (hasMorePages) {
-                log.info("currentPage:" + currentPage);
-                PageOfImages page = imagesHttpClient.getNextPage(auth, currentPage);
-                hasMorePages = page.isHasMore();
-                for(Image imageDesc : page.getPictures()) {
-                    Image fullImageInfo = imagesHttpClient.getImageInfo(auth, imageDesc.getId());
-                    imagesMap.put(imageDesc.getId(), fullImageInfo);
-                    imageDigestToIdMap.put(getImageDigest(fullImageInfo), imageDesc.getId());
+                while (hasMorePages) {
+                    log.info("currentPage: {}", currentPage);
+                    PageOfImages page = imagesHttpClient.getNextPage(currentPage);
+                    hasMorePages = page.isHasMore();
+                    for(Image imageDesc : page.getPictures()) {
+                        Image fullImageInfo = imagesHttpClient.getImageInfo(imageDesc.getId());
+                        imagesMap.put(imageDesc.getId(), fullImageInfo);
+                        imageDigestToIdMap.put(getImageDigest(fullImageInfo), imageDesc.getId());
+                    }
+                    currentPage++;
                 }
-                currentPage++;
-            }
 
+            }
+        } catch (Exception e) {
+            log.error("run: something went wrong: ", e);
         }
+
         repository.setImagesMap(imagesMap);
         repository.setImagesDigestMap(imageDigestToIdMap);
     }

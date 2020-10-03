@@ -37,8 +37,8 @@ public class ImagesHttpClient {
                 .build();
     }
 
-    public PageOfImages getNextPage(Auth auth, int pageNumber) {
-        log.info("getNextPage: id=" + pageNumber);
+    public PageOfImages getNextPage(int pageNumber) {
+        log.info("getNextPage: id={}", pageNumber);
         ResponseEntity<PageOfImages> pageResponse = getRestTemplate().exchange(url + "/images?page=" + pageNumber,
                 HttpMethod.GET,
                 getBasicAuthRequest(),
@@ -47,8 +47,8 @@ public class ImagesHttpClient {
 
     }
 
-    public Image getImageInfo(Auth auth, String imageID) {
-        log.info("getImageInfo: id=" + imageID);
+    public Image getImageInfo(String imageID) {
+        log.info("getImageInfo: id={}", imageID);
 
         ResponseEntity<Image> pageResponse = getRestTemplate().exchange(url + "/images/" + imageID,
                 HttpMethod.GET,
